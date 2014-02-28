@@ -13,18 +13,17 @@
         android:layout_width="wrap_content"
         android:layout_toLeftOf="@+id/btnDownload"
         android:layout_height="wrap_content"/>
-
-    <Button
+    <ImageButton
             android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@id/btnAdd"
-            android:text=">"
+            android:layout_toLeftOf="@+id/btnAdd"
+            android:src="@drawable/ic_action_download"
             android:id="@+id/btnDownload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-    <Button
+    <ImageButton
         android:layout_marginLeft="5dp"
         android:layout_alignParentRight="true"
-        android:text="+"
+        android:src="@drawable/ic_action_accept"
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

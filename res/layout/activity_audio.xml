@@ -9,8 +9,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
         <EditText
             android:id="@+id/txtSearchString"
             android:layout_marginLeft="10dp"
@@ -19,17 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_toLeftOf="@+id/btnSearch"
             android:layout_height="wrap_content"/>
-
-        <Button
+        <ImageButton
             android:layout_marginLeft="10dp"
             android:layout_alignParentRight="true"
-            android:text="@string/search"
+            android:src="@drawable/ic_action_search"
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
     </RelativeLayout>
-
     <ListView
             android:layout_marginTop="10dp"
         android:id="@+id/listview"

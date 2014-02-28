@@ -3,10 +3,7 @@ package tk.zabozhanov.SharamVKSharing;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.*;
 import tk.zabozhanov.SharamVKSharing.response.AudioItem;
 
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class ListViewAdapter extends ArrayAdapter<AudioItem> {
         final AudioItem item = getItem(position);
         TextView txtAudio = (TextView) convertView.findViewById(R.id.txtAudio);
         txtAudio.setText(item.artist + " - " + item.title);
-        Button btnAdd = (Button) convertView.findViewById(R.id.btnAdd);
+        ImageButton btnAdd = (ImageButton) convertView.findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,10 +39,23 @@ public class ListViewAdapter extends ArrayAdapter<AudioItem> {
             }
         });
 
-        return convertView;
+	    ImageButton btnSave = (ImageButton) convertView.findViewById(R.id.btnDownload);
+	    btnSave.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View view) {
+			    if (listener != null) {
+				    listener.saveItem(item);
+			    }
+		    }
+	    });
+
+
+
+	    return convertView;
     }
 
     public interface ListViewAdapterListener {
         public void addItem(AudioItem item);
+	    public void saveItem(AudioItem item);
     }
 }

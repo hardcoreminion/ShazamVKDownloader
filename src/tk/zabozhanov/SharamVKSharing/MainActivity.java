@@ -1,7 +1,12 @@
 package tk.zabozhanov.SharamVKSharing;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +50,7 @@ public class MainActivity extends VKActivity implements ListViewAdapter.ListView
 
         mListView = (ListView) findViewById(R.id.listview);
         mTxtSearch = (EditText) findViewById(R.id.txtSearchString);
-        Button searchButton = (Button) findViewById(R.id.btnSearch);
+	    ImageButton searchButton = (ImageButton) findViewById(R.id.btnSearch);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,8 +109,9 @@ public class MainActivity extends VKActivity implements ListViewAdapter.ListView
                         int owner_id = object.getInt("owner_id");
                         String artist = object.getString("artist");
                         String title = object.getString("title");
+                        String url = object.getString("url");
 
-                        AudioItem item = new AudioItem(audioId, owner_id, artist, title);
+                        AudioItem item = new AudioItem(audioId, owner_id, artist, title, url);
                         items.add(item);
                     }
                     mAdapter.notifyDataSetChanged();
@@ -185,4 +191,25 @@ public class MainActivity extends VKActivity implements ListViewAdapter.ListView
 	public void doSearch() {
 		requestList();
 	}
+
+	@Override
+	public void saveItem(AudioItem item) {
+
+		String fileName = item.artist + " - " + item.title;
+
+		String url = item.url;
+		DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+		request.setDescription(fileName);
+		request.setTitle("MP3 downloading");
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			request.allowScanningByMediaScanner();
+			request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+		}
+		request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName + ".mp3");
+
+		DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+		manager.enqueue(request);
+	}
+
+
 }
