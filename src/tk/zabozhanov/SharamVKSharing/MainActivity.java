@@ -127,7 +127,11 @@ public class MainActivity extends VKActivity implements ListViewAdapter.ListView
         @Override
         public void onError(VKError error) {
             super.onError(error);
-	        Toast.makeText(MainActivity.this, "Ошибка подключения", Toast.LENGTH_SHORT).show();
+	        if (error.apiError.errorCode == 5) {
+		        VKSdk.authorize(App.sMyScope, false, true);
+		        return;
+	        }
+	        Toast.makeText(MainActivity.this, "Ошибка подключения\n" + error.apiError.errorMessage, Toast.LENGTH_SHORT).show();
         }
     };
 
